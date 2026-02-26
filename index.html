@@ -17,6 +17,8 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <script id="tailwind-config">
       tailwind.config = {
@@ -32,7 +34,6 @@
               "surface-dark": "#1a1122",
             },
             fontFamily: {
-              // กำหนดให้ Tailwind ใช้ฟอนต์ Prompt เป็นค่าเริ่มต้นสำหรับทั้งหน้าเว็บ
               sans: ["Prompt", "sans-serif"],
               display: ["Prompt", "sans-serif"],
             },
@@ -52,17 +53,46 @@
         background: rgba(140, 43, 238, 0.05);
         backdrop-filter: blur(12px);
         border: 1px solid rgba(140, 43, 238, 0.2);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
+      
+      /* เอฟเฟกต์เมื่อโฮเวอร์การ์ด */
+      .glass-card:hover {
+        transform: translateY(-8px);
+        background: rgba(140, 43, 238, 0.08);
+        border-color: rgba(140, 43, 238, 0.5);
+        box-shadow: 0 15px 35px -10px rgba(140, 43, 238, 0.4);
+      }
+
       .glow-purple {
         box-shadow: 0 0 40px -10px rgba(140, 43, 238, 0.5);
       }
+
+      /* แอนิเมชันสำหรับข้อความ Gradient */
+      @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
       .gradient-text {
-        background: linear-gradient(135deg, #8c2bee, #00d4ff, #ffd700);
+        background: linear-gradient(135deg, #8c2bee, #00d4ff, #ffd700, #8c2bee);
+        background-size: 300% 300%;
+        animation: gradient-shift 6s ease infinite;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
 
-      /* เพิ่ม Smooth Scroll */
+      /* แอนิเมชันสำหรับวงกลมพื้นหลัง */
+      @keyframes float {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+      .animate-float-1 { animation: float 12s ease-in-out infinite; }
+      .animate-float-2 { animation: float 15s ease-in-out infinite reverse; }
+
       html {
         scroll-behavior: smooth;
       }
@@ -70,22 +100,22 @@
   </head>
 
   <body
-    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30"
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30 overflow-x-hidden"
   >
     <nav
-      class="fixed top-0 left-0 right-0 z-50 border-b border-primary/10 bg-background-dark/80 backdrop-blur-md"
+      class="fixed top-0 left-0 right-0 z-50 border-b border-primary/10 bg-background-dark/80 backdrop-blur-md transition-all duration-300"
     >
       <div
         class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
       >
-        <div class="flex items-center gap-3">
-          <div class="p-2 bg-primary/20 rounded-lg">
+        <div class="flex items-center gap-3" data-aos="fade-right" data-aos-duration="1000">
+          <div class="p-2 bg-primary/20 rounded-lg hover:rotate-12 transition-transform duration-300">
             <span class="material-symbols-outlined text-primary text-3xl"
               >school</span
             >
           </div>
           <div>
-            <h1 class="text-xl font-800 tracking-tight leading-none uppercase">
+            <h1 class="text-xl font-800 tracking-tight leading-none uppercase hover:text-primary transition-colors cursor-pointer">
               GRADUATION FAREWELL PARTY <span class="text-primary">2026</span>
             </h1>
             <p
@@ -96,21 +126,16 @@
           </div>
         </div>
 
-        <div class="hidden md:flex items-center gap-10">
+        <div class="hidden md:flex items-center gap-10" data-aos="fade-left" data-aos-duration="1000">
           <a
-            class="text-sm font-semibold hover:text-primary transition-colors"
+            class="text-sm font-semibold hover:text-primary transition-all duration-300 hover:scale-110"
             href="#schedule"
             >กำหนดการ</a
           >
           <a
-            class="text-sm font-semibold hover:text-primary transition-colors"
+            class="text-sm font-semibold hover:text-primary transition-all duration-300 hover:scale-110"
             href="#theme"
             >ธีมการแต่งกาย</a
-          >
-          <a
-            class="text-sm font-semibold hover:text-primary transition-colors"
-            href="#rsvp"
-            >ยืนยันการเข้าร่วม</a
           >
         </div>
       </div>
@@ -122,19 +147,20 @@
       >
         <div class="absolute inset-0 z-0">
           <div
-            class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
+            class="animate-float-1 absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
           ></div>
           <div
-            class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-blue/10 rounded-full blur-[120px]"
+            class="animate-float-2 absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-blue/15 rounded-full blur-[120px]"
           ></div>
         </div>
 
         <div class="relative z-10 max-w-5xl text-center">
           <div
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-accent-gold/30 mb-8"
+            data-aos="fade-down" data-aos-duration="1000"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-accent-gold/30 mb-8 hover:border-accent-gold/80 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all cursor-default"
           >
             <span
-              class="material-symbols-outlined text-accent-gold text-lg fill-1"
+              class="material-symbols-outlined text-accent-gold text-lg fill-1 animate-pulse"
               >celebration</span
             >
             <span
@@ -145,6 +171,7 @@
           </div>
 
           <h1
+            data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200"
             class="text-6xl md:text-8xl font-800 leading-[1.1] tracking-tight mb-8"
           >
             ขอเรียนเชิญ <br />
@@ -152,6 +179,7 @@
           </h1>
 
           <p
+            data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"
             class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
           >
             คณะกรรมการจัดงานขอเรียนเชิญคณะอาจารย์
@@ -161,52 +189,55 @@
         </div>
       </section>
 
-      <section id="schedule" class="py-20 px-6 max-w-7xl mx-auto">
-        <p class="text-center text-slate-400 text-sm mb-12 max-w-3xl mx-auto">
+      <section id="schedule" class="py-20 px-6 max-w-7xl mx-auto relative z-10">
+        <p data-aos="fade-up" class="text-center text-slate-400 text-sm mb-12 max-w-3xl mx-auto">
           งานเลี้ยงแสดงความยินดีแก่บัณฑิตจัดขึ้นเพื่อเป็นเกียรติแก่ผู้สำเร็จการศึกษา
           เปิดโอกาสให้คณาจารย์และผู้มีเกียรติได้ร่วมแสดงความยินดี
           พร้อมรับประทานอาหารและรับชมการแสดงภายในงาน
         </p>
 
         <div
-          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6 mb-6"
+          data-aos="fade-right" data-aos-delay="100"
+          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6 mb-6 group cursor-default"
         >
-          <div class="bg-primary/10 p-4 rounded-full">
+          <div class="bg-primary/10 p-4 rounded-full group-hover:bg-primary/30 transition-colors group-hover:scale-110 duration-300">
             <span class="material-symbols-outlined text-primary"
               >calendar_today</span
             >
           </div>
           <div>
-            <p class="text-slate-400 text-sm font-medium mb-1">วันจัดงาน</p>
+            <p class="text-slate-400 text-sm font-medium mb-1 group-hover:text-primary/80 transition-colors">วันจัดงาน</p>
             <h3 class="text-xl font-bold">1 มีนาคม พ.ศ. 2569</h3>
           </div>
         </div>
 
         <div
-          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6 mb-6"
+          data-aos="fade-left" data-aos-delay="200"
+          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6 mb-6 group cursor-default"
         >
-          <div class="bg-accent-blue/10 p-4 rounded-full">
+          <div class="bg-accent-blue/10 p-4 rounded-full group-hover:bg-accent-blue/30 transition-colors group-hover:scale-110 duration-300">
             <span class="material-symbols-outlined text-accent-blue"
               >schedule</span
             >
           </div>
           <div>
-            <p class="text-slate-400 text-sm font-medium mb-1">เวลา</p>
+            <p class="text-slate-400 text-sm font-medium mb-1 group-hover:text-accent-blue/80 transition-colors">เวลา</p>
             <h3 class="text-xl font-bold">17.00 – 22.00 น.</h3>
             <p class="text-slate-500 text-sm">รับประทานอาหารและรับชมการแสดง</p>
           </div>
         </div>
 
         <div
-          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6"
+          data-aos="fade-right" data-aos-delay="300"
+          class="glass-card p-8 rounded-xl border-primary/20 flex items-start gap-6 group cursor-default"
         >
-          <div class="bg-accent-gold/10 p-4 rounded-full">
+          <div class="bg-accent-gold/10 p-4 rounded-full group-hover:bg-accent-gold/30 transition-colors group-hover:scale-110 duration-300">
             <span class="material-symbols-outlined text-accent-gold"
               >location_on</span
             >
           </div>
           <div>
-            <p class="text-slate-400 text-sm font-medium mb-1">สถานที่จัดงาน</p>
+            <p class="text-slate-400 text-sm font-medium mb-1 group-hover:text-accent-gold/80 transition-colors">สถานที่จัดงาน</p>
             <h3 class="text-xl font-bold">
               อาคาร 35 มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
             </h3>
@@ -214,12 +245,12 @@
           </div>
         </div>
 
-        <div class="mt-12 rounded-xl overflow-hidden border border-primary/20">
+        <div data-aos="zoom-in" data-aos-delay="400" class="mt-12 rounded-xl overflow-hidden border border-primary/20 hover:border-primary/50 transition-colors duration-500 shadow-2xl hover:shadow-primary/20">
           <iframe
             src="https://www.google.com/maps?q=RMUTI%20Building%2035&output=embed"
             width="100%"
             height="350"
-            style="border: 0"
+            style="border: 0; filter: invert(90%) hue-rotate(180deg);"
             allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -234,230 +265,119 @@
       >
         <div class="max-w-7xl mx-auto px-6">
           <h2
+            data-aos="fade-right"
             class="text-sm font-bold text-primary tracking-[0.1em] uppercase mb-4"
           >
             ธีมการแต่งกาย
           </h2>
 
-          <h3 class="text-4xl md:text-5xl font-800 leading-tight mb-6">
-            Beloved <span class="text-accent-blue">Character Theme</span>
+          <h3 data-aos="fade-up" class="text-4xl md:text-5xl font-800 leading-tight mb-6">
+            Beloved <span class="text-accent-blue hover:text-primary transition-colors duration-500 cursor-pointer">Character Theme</span>
           </h3>
 
-          <p class="text-slate-400 text-lg max-w-3xl mb-12">
+          <p data-aos="fade-up" data-aos-delay="100" class="text-slate-400 text-lg max-w-3xl mb-12">
             เพื่อสร้างบรรยากาศที่สวยงามและเป็นกันเองผู้เข้าร่วมงานสามารถแต่งกายเป็นตัวละคร
             จากภาพยนตร์ การ์ตูน อนิเมะ เกม หรือซีรีส์ ตามความเหมาะสม
           </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="https://i.redd.it/spider-man-2-4k-photos-9-16-v0-c8tv8q2f74bf1.jpg?width=2160&format=pjpg&auto=webp&s=5cd0742e42d0b96e15c9efbb198ec3da1d3c27bf"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-primary/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Superheroes
-      </div>
-      <h4 class="text-2xl font-800 mb-2">ฮีโร่</h4>
-      <p class="text-slate-300 text-sm">Marvel, DC หรือฮีโร่ที่คุณสร้างเอง</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="100" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(140,43,238,0.4)] transition-shadow duration-500">
+              <img src="https://i.redd.it/spider-man-2-4k-photos-9-16-v0-c8tv8q2f74bf1.jpg?width=2160&format=pjpg&auto=webp&s=5cd0742e42d0b96e15c9efbb198ec3da1d3c27bf"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-primary/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(140,43,238,0.8)]">
+                Superheroes
+                </div>
+                <h4 class="text-2xl font-800 mb-2">ฮีโร่</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Marvel, DC หรือฮีโร่ที่คุณสร้างเอง</p>
+              </div>
+            </div>
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="https://cms.dmpcdn.com/ugcarticle/2025/08/06/cf9d5670-723a-11f0-869e-95c49d52ca5d_webp_original.webp"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-accent-blue/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Fantasy & Magic
-      </div>
-      <h4 class="text-2xl font-800 mb-2">โลกแฟนตาซี</h4>
-      <p class="text-slate-300 text-sm">พ่อมด เอลฟ์ และเวทมนตร์</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="200" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-shadow duration-500">
+              <img src="https://cms.dmpcdn.com/ugcarticle/2025/08/06/cf9d5670-723a-11f0-869e-95c49d52ca5d_webp_original.webp"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-accent-blue/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(0,212,255,0.8)]">
+                Fantasy & Magic
+                </div>
+                <h4 class="text-2xl font-800 mb-2">โลกแฟนตาซี</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">พ่อมด เอลฟ์ และเวทมนตร์</p>
+              </div>
+            </div>
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="img/unnamed (3).jpg"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-accent-gold/80 text-black text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Anime
-      </div>
-      <h4 class="text-2xl font-800 mb-2">ตัวละครอนิเมะ</h4>
-      <p class="text-slate-300 text-sm">คาแรกเตอร์จากการ์ตูนและอนิเมะ</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="300" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-shadow duration-500">
+              <img src="img/unnamed (3).jpg"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-accent-gold/80 text-black text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+                Anime
+                </div>
+                <h4 class="text-2xl font-800 mb-2">ตัวละครอนิเมะ</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">คาแรกเตอร์จากการ์ตูนและอนิเมะ</p>
+              </div>
+            </div>
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="https://i.pinimg.com/736x/7b/a3/24/7ba324654b666e71ab6928de97fb6010.jpg"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-accent-gold/80 text-black text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Movies
-      </div>
-      <h4 class="text-2xl font-800 mb-2">ตัวละครภาพยนตร์</h4>
-      <p class="text-slate-300 text-sm">คาแรกเตอร์จากภาพยนตร์และซีรีส์</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="400" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-shadow duration-500">
+              <img src="https://i.pinimg.com/736x/7b/a3/24/7ba324654b666e71ab6928de97fb6010.jpg"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-accent-gold/80 text-black text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+                Movies
+                </div>
+                <h4 class="text-2xl font-800 mb-2">ตัวละครภาพยนตร์</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">คาแรกเตอร์จากภาพยนตร์และซีรีส์</p>
+              </div>
+            </div>
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="https://f.ptcdn.info/447/029/000/1426610080-041214cind-o.jpg"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-accent-blue/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Cartoon
-      </div>
-      <h4 class="text-2xl font-800 mb-2">การ์ตูนวัยเด็ก</h4>
-      <p class="text-slate-300 text-sm">ตัวละครจากการ์ตูนและซีรีส์ตอนเด็ก</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="500" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(0,212,255,0.4)] transition-shadow duration-500">
+              <img src="https://f.ptcdn.info/447/029/000/1426610080-041214cind-o.jpg"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-accent-blue/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(0,212,255,0.8)]">
+                Cartoon
+                </div>
+                <h4 class="text-2xl font-800 mb-2">การ์ตูนวัยเด็ก</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">ตัวละครจากการ์ตูนและซีรีส์ตอนเด็ก</p>
+              </div>
+            </div>
 
-  <div class="group relative overflow-hidden rounded-xl h-[420px]">
-    <img src="https://m.media-amazon.com/images/I/61RH+Kfo2YL._AC_UF894,1000_QL80_.jpg"
-    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-    <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
-    <div class="absolute bottom-0 p-8">
-      <div class="bg-primary/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3">
-      Video Games
-      </div>
-      <h4 class="text-2xl font-800 mb-2">ตัวละครจากเกม</h4>
-      <p class="text-slate-300 text-sm">คาแรกเตอร์จากวิดีโอเกม</p>
-    </div>
-  </div>
+            <div data-aos="zoom-in-up" data-aos-delay="600" class="group relative overflow-hidden rounded-xl h-[420px] shadow-lg hover:shadow-[0_0_30px_rgba(140,43,238,0.4)] transition-shadow duration-500">
+              <img src="https://m.media-amazon.com/images/I/61RH+Kfo2YL._AC_UF894,1000_QL80_.jpg"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute bottom-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div class="bg-primary/80 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit mb-3 shadow-[0_0_10px_rgba(140,43,238,0.8)]">
+                Video Games
+                </div>
+                <h4 class="text-2xl font-800 mb-2">ตัวละครจากเกม</h4>
+                <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">คาแรกเตอร์จากวิดีโอเกม</p>
+              </div>
+            </div>
 
-</div>
           </div>
         </div>
       </section>
 
-      <section id="rsvp" class="py-20 px-6 max-w-3xl mx-auto">
-        <div
-          class="glass-card p-8 md:p-12 rounded-xl border-primary/30 glow-purple"
-        >
-          <div class="text-center mb-8">
-            <h3 class="text-3xl font-800 mb-2">ยืนยันการเข้าร่วมงาน</h3>
-            <p class="text-slate-400">
-              กรุณากรอกชื่อและเลือกสถานะเพื่อการจัดเตรียมสถานที่
-            </p>
-            <p class="text-accent-gold text-xl font-bold mt-2 mb-4 ">ราคา 250 บาทต่อ 1 ท่าน</p>
-          </div>
-
-          <form id="rsvp-form" class="space-y-6">
-            <div>
-              <label class="block text-sm font-medium mb-2 text-primary"
-                >ชื่อ-นามสกุล</label
-              >
-              
-              <input
-                type="text"
-                name="fullname"
-                required
-                class="w-full bg-surface-dark border border-primary/20 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-white"
-                placeholder="ระบุชื่อของท่าน"
-              />
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-              <label class="relative cursor-pointer">
-                <input
-                  type="radio"
-                  name="status"
-                  value="Approve"
-                  class="peer sr-only"
-                  checked
-                />
-                <div
-                  class="text-center p-4 rounded-lg border border-primary/20 peer-checked:bg-primary/20 peer-checked:border-primary transition-all"
-                >
-                  <span
-                    class="material-symbols-outlined block mb-1 text-accent-blue"
-                    >check_circle</span
-                  >
-                  <span class="text-sm font-bold">ไปร่วมงาน</span>
-                </div>
-              </label>
-
-              <label class="relative cursor-pointer">
-                <input
-                  type="radio"
-                  name="status"
-                  value="Decline"
-                  class="peer sr-only"
-                />
-                <div
-                  class="text-center p-4 rounded-lg border border-primary/20 peer-checked:bg-red-500/20 peer-checked:border-red-500 transition-all"
-                >
-                  <span
-                    class="material-symbols-outlined block mb-1 text-slate-400"
-                    >cancel</span
-                  >
-                  <span class="text-sm font-bold">ไม่สะดวก</span>
-                </div>
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              id="submit-btn"
-              class="w-full bg-primary hover:bg-primary/80 text-white font-bold py-4 rounded-lg transition-all transform hover:scale-[1.02] active:scale-95 flex justify-center items-center gap-2"
-            >
-              <span id="btn-text">ยืนยันข้อมูล</span>
-              <span
-                id="btn-loader"
-                class="hidden animate-spin material-symbols-outlined"
-                >sync</span
-              >
-            </button>
-            <p id="form-message" class="text-center text-sm hidden"></p>
-          </form>
-        </div>
-      </section>
     </main>
 
     <footer
       class="bg-background-dark pt-20 pb-10 border-t border-primary/10 px-6 text-center text-slate-500 text-sm"
     >
-      © 2569 คณะกรรมการจัดงานเลี้ยงแสดงความยินดีแก่บัณฑิต
-      มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
+      <p data-aos="fade-up">© 2569 คณะกรรมการจัดงานเลี้ยงแสดงความยินดีแก่บัณฑิต</p>
+      <p data-aos="fade-up" data-aos-delay="100">มหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน</p>
     </footer>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbzkbu_v_dcfuY0U6r98-u-DFiJ-yLtrRQ6HeK9EfP6dUhTnKUG1tuhcw3R6bs-GBKTm/exec"; // วาง URL จาก Google Apps Script
-      const form = document.getElementById("rsvp-form");
-      const btn = document.getElementById("submit-btn");
-      const btnText = document.getElementById("btn-text");
-      const btnLoader = document.getElementById("btn-loader");
-      const msg = document.getElementById("form-message");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        // แสดงสถานะ Loading
-        btn.disabled = true;
-        btnText.innerText = "กำลังบันทึก...";
-        btnLoader.classList.remove("hidden");
-
-        fetch(scriptURL, { method: "POST", body: new FormData(form) })
-          .then((response) => {
-            msg.innerText = "ส่งข้อมูลสำเร็จ! ขอบคุณที่ตอบรับครับ";
-            msg.classList.remove("hidden", "text-red-500");
-            msg.classList.add("text-accent-blue");
-            form.reset();
-          })
-          .catch((error) => {
-            msg.innerText = "เกิดข้อผิดพลาด กรุณาลองใหม่";
-            msg.classList.remove("hidden", "text-accent-blue");
-            msg.classList.add("text-red-500");
-            console.error("Error!", error.message);
-          })
-          .finally(() => {
-            btn.disabled = false;
-            btnText.innerText = "ยืนยันข้อมูล";
-            btnLoader.classList.add("hidden");
-          });
+      AOS.init({
+        once: true, // แอนิเมชันเล่นแค่ครั้งเดียวตอน Scroll ลงมา
+        offset: 50,  // ระยะก่อนที่จะแสดงแอนิเมชัน
       });
     </script>
   </body>
